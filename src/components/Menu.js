@@ -7,9 +7,10 @@ function Menu() {
     const [menu, setMenu] = useState([]);
 
     const fetchData = async ()=>{
-        const menuResult = await db.collection('menu').get();
-        const menusData = menuResult.docs.map(m => m.data())
-        setMenu(menusData[0].menu);
+        const menuResult = await db.collection('menus').get();
+        const menusData = menuResult.docs.map(menu => menu.data())
+        setMenu(menusData);
+         console.log(menusData)
       }
 
       useEffect(()=>{
