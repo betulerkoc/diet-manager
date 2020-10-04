@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 function Menu(props) {
 
   return (
-    <div>
+    <div className="card" style={{ width: '18rem' }}>
         {console.log(props)}
         <h1>Menu</h1>
         <div><h3>Breakfast:</h3> {props.data.breakfast.map(b =>  <span><br/> {b.mealName}, {b.calories} <br/></span>)}</div>

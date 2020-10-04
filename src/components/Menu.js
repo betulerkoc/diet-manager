@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import db from '../firebaseConfig';
 import Board from "./Board";
+import Form from "./Form";
 
 function Menu() {
 
@@ -18,7 +19,8 @@ function Menu() {
       },[])
 
   return (
-    <div>
+    <div className="container">
+      <Form/>
         {menu.map(m => <Board data={m}/>)}
     </div>
   );
