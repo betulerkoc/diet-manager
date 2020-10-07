@@ -8,17 +8,21 @@ function Form() {
     const [lunchAndDinnerOptions, setLunchAndDinnerOptions] = useState([]);
     const [middleOptions, setMiddleOptions] = useState([]);
 
-    const [allMenu, setAllMenu] = React.useState({
-        breakfast: [{mealName: "", calories: ""}],
-        lunch: [{mealName: "", calories: ""}],
-        dinner: [{mealName: "", calories: ""}],
-        percentage: 100,
-        totalCalory: 0
-      })
+    const [menu, setMenu] = useState([]);
+
+    const [breakfast, setBreakfast] = useState([]);
+    const [lunch, setLunch] = useState([]);
+    const [dinner, setDinner] = useState([]);
+
+    var myMenu = {
+      breakfast: [{mealName: breakfast.breakfast1, calories: ""}, {mealName: breakfast.breakfast2, calories: ""}, {mealName: breakfast.breakfast3, calories: ""}],
+      lunch:  [{mealName: lunch.lunch1, calories: ""}, {mealName: lunch.lunch2, calories: ""}, {mealName: lunch.lunch3, calories: ""}],
+      dinner:  [{mealName: dinner.dinner1, calories: ""}, {mealName: dinner.dinner2, calories: ""}, {mealName: dinner.dinner3, calories: ""}]
+  };
 
     const fetchBreakfastData = async ()=>{
         const breakfastOptionResult = await db.collection('breakfastOptions').get();
-        console.log(breakfastOptionResult)
+       // console.log(breakfastOptionResult)
         const breakfastOptionData = breakfastOptionResult.docs.map(b => b.data())
         setBreakfastOption(breakfastOptionData);
         // console.log(breakfastOptionData)
@@ -26,7 +30,7 @@ function Form() {
 
     const fetchLunchAndDinnerOptionsData = async ()=>{
         const luncAndDinnetOptionResult = await db.collection('lunchAndDinnerOptions').get();
-        console.log(luncAndDinnetOptionResult)
+        //console.log(luncAndDinnetOptionResult)
         const luncAndDinnetOptionData = luncAndDinnetOptionResult.docs.map(b => b.data())
         setLunchAndDinnerOptions(luncAndDinnetOptionData);
         // console.log(luncAndDinnetOptionData)
@@ -34,7 +38,7 @@ function Form() {
     
     const fetchMiddleOptionsData = async ()=>{
         const middleOptionsResult = await db.collection('middleOptions').get();
-        console.log(middleOptionsResult)
+        //console.log(middleOptionsResult)
         const middleOptionsData = middleOptionsResult.docs.map(b => b.data())
         setMiddleOptions(middleOptionsData);
         // console.log(middleOptionsData)
@@ -48,61 +52,76 @@ function Form() {
 
     const addNewMenu = e => {
         e.preventDefault()
-        db.collection('users').add({
+        db.collection('menus').add({
+          myMenu
     })
     }
 
-    const handleInputChange = (e, key) => {
-        setAllMenu({ ...allMenu, [key]: e.target.value });
-        console.log(allMenu)
+    const handleInputChange = (e) => {
+        console.log(breakfast);
+         setMenu({ ...menu, [e.target.name]: e.target.value });
+
+        if(e.target.name.includes("breakfast")) {
+          setBreakfast({...breakfast, [e.target.name]: e.target.value})
+        }
+        if(e.target.name.includes("lunch")) {
+          setLunch({...lunch, [e.target.name]: e.target.value})
+        }
+        if(e.target.name.includes("dinner")) {
+          setDinner({...dinner, [e.target.name]: e.target.value})
+        }
+
+        console.log(breakfast);
+        console.log(lunch);
+        console.log(dinner);
     };
 
   return (
     <form onSubmit={addNewMenu}>
        <div class="form-group col-md-3">
        <p>Breakfast:</p> 
-       <select className="form-control" onChange={(e) => handleInputChange(e, "breakfast1")}>
+       <select className="form-control" name="breakfast1" onChange={(e) => handleInputChange(e)}>
               {breakfastOption.map(m => <option value= {m.mealName}>{m.mealName } - {m.calories}</option>)}
         </select>
-        <select className="form-control" onChange={(e) => handleInputChange(e, "breakfast2")}>
+        <select className="form-control" name="breakfast2" onChange={(e) => handleInputChange(e)}>
               {breakfastOption.map(m => <option value= {m.mealName}>{m.mealName} - {m.calories}</option>)}
         </select>
-        <select className="form-control" onChange={(e) => handleInputChange(e, "breakfast3")}>
+        <select className="form-control" name="breakfast3" onChange={(e) => handleInputChange(e)}>
               {breakfastOption.map(m => <option value= {m.mealName}>{m.mealName} - {m.calories}</option>)}
         </select>
        <div>
        <p>Lunch:</p> 
-        <select className="form-control" onChange={(e) => handleInputChange(e, "lunch1")}>
+        <select className="form-control" name="lunch1" onChange={(e) => handleInputChange(e)}>
               {lunchAndDinnerOptions.map(m => <option value= {m.mealName}>{m.mealName} - {m.calories}</option>)}
         </select>
-        <select className="form-control" onChange={(e) => handleInputChange(e, "lunch2")}>
+        <select className="form-control" name="lunch2" onChange={(e) => handleInputChange(e)}>
               {lunchAndDinnerOptions.map(m => <option value= {m.mealName}>{m.mealName} - {m.calories}</option>)}
         </select>
-        <select className="form-control" onChange={(e) => handleInputChange(e, "lunch3")}>
+        <select className="form-control" name="lunch3" onChange={(e) => handleInputChange(e)}>
               {lunchAndDinnerOptions.map(m => <option value= {m.mealName}>{m.mealName} - {m.calories}</option>)}
         </select>
        </div>
        <div>
        <p>Snacks: </p>   
-       <select className="form-control" onChange={(e) => handleInputChange(e, "snacksLunch")}>
+       <select className="form-control" name="snack1" onChange={(e) => handleInputChange(e)}>
             {middleOptions.map(m => <option value= {m.mealName}>{m.mealName} - {m.calories}</option>)}
         </select>
        </div>
        <div>
        <p>Dinner:</p>  
-       <select className="form-control" onChange={(e) => handleInputChange(e, "dinner1")}>
+       <select className="form-control" name="dinner1" onChange={(e) => handleInputChange(e)}>
               {lunchAndDinnerOptions.map(m => <option value= {m.mealName}>{m.mealName} - {m.calories}</option>)}
         </select>
-        <select className="form-control" onChange={(e) => handleInputChange(e, "dinner2")}>
+        <select className="form-control" name="dinner2" onChange={(e) => handleInputChange(e)}>
               {lunchAndDinnerOptions.map(m => <option value= {m.mealName}>{m.mealName} - {m.calories}</option>)}
         </select>
-        <select className="form-control" onChange={(e) => handleInputChange(e, "dinner3")}>
+        <select className="form-control" name="dinner3" onChange={(e) => handleInputChange(e)}>
               {lunchAndDinnerOptions.map(m => <option value= {m.mealName}>{m.mealName} - {m.calories}</option>)}
         </select>
        </div>
         <div>
         <p>Snacks: </p> 
-        <select className="form-control" onChange={(e) => handleInputChange(e, "snacksDinner")}>
+        <select className="form-control" name="snack2" onChange={(e) => handleInputChange(e)}>
             {middleOptions.map(m => <option value= {m.mealName}>{m.mealName} - {m.calories}</option>)}
         </select>
         </div>    
