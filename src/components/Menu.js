@@ -85,28 +85,34 @@ function Menu() {
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
-    console.log(e.target.value)
-    console.log(sortOption)
     sortBoards();
   }
 
   useEffect(()=> {
     calculateTheCalories()
-  },[breakfast,lunch,dinner])
-    const handleInputChange = (e) => {
-      if(e.target.name.includes("breakfast")) {
-        setBreakfast({...breakfast, [e.target.name]: e.target.value})
-      }
-      if(e.target.name.includes("lunch")) {
-        setLunch({...lunch, [e.target.name]: e.target.value})
-      }
-      if(e.target.name.includes("dinner")) {
-        setDinner({...dinner, [e.target.name]: e.target.value})
-      }
+      },[breakfast,lunch,dinner])
+        const handleInputChange = (e) => {
+          if(e.target.name.includes("breakfast")) {
+            setBreakfast({...breakfast, [e.target.name]: e.target.value})
+          }
+          if(e.target.name.includes("lunch")) {
+            setLunch({...lunch, [e.target.name]: e.target.value})
+          }
+          if(e.target.name.includes("dinner")) {
+            setDinner({...dinner, [e.target.name]: e.target.value})
+          }
   };
 
   const handleCommitmentChange = (e) => {
     setCommitment(e.target.value);
+  }
+
+  const handleDayChange = (e) => {
+    setDay(e.target.value);
+  }
+
+  const handlePersonChange = (e) => {
+    setPerson(e.target.value);
   }
 
   const handleCardType = () => {
@@ -128,7 +134,7 @@ function Menu() {
 
   return (
     <div className="container">
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-1">
         <span>Sort By Calories</span>
         <select className="form-control" name="sort" onChange={(e) => handleSortChange(e)}>
               <option value="desc">Select</option>
@@ -139,7 +145,7 @@ function Menu() {
 
   <button onClick={handleCardType} className="btn btn-warning">{cardType}</button>
 
-      <Form handleInputChange={handleInputChange} submit={addNewMenu} totalCalories={calories}/>
+    <Form handleInputChange={handleInputChange} handleDayChange={handleDayChange} handlePersonChange={handlePersonChange} submit={addNewMenu} totalCalories={calories}/>
       {console.log(menu)}
         {menu.map(m => {
           return (

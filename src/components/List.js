@@ -28,7 +28,7 @@ function List(props) {
                 </div>
             </a>
             <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Total Calories: </h5>
+                <h5>Total Calory: {props.data.myMenu.calories}</h5>
             </div>
             </div><br/><br/>
     </div>
