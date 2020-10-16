@@ -36,6 +36,30 @@ function Menu() {
     });
   }
 
+  const calculateTheCalories = ()=> {
+    setCalories(() => {
+      let sum = 0;
+      for(const key in breakfast)
+      {
+        sum += Number(breakfast[key].split('-')[1])
+      }
+
+      for(const key in lunch)
+      {
+        sum += Number(lunch[key].split('-')[1])
+      }
+
+      for(const key in dinner)
+      {
+        sum += Number(dinner[key].split('-')[1])
+      }
+      return sum
+    })
+  }
+
+  useEffect(()=> {
+    calculateTheCalories()
+  },[breakfast,lunch,dinner])
     const handleInputChange = (e) => {
       // console.log(e.target.value);
      // setMenu({ ...menu, [e.target.name]: e.target.value });
@@ -45,16 +69,14 @@ function Menu() {
       //console.log(...e.target.value.calories)
       if(e.target.name.includes("breakfast")) {
         setBreakfast({...breakfast, [e.target.name]: e.target.value})
-        setCalories(calories + Number(e.target.value.split("-")[1]));
       }
       if(e.target.name.includes("lunch")) {
         setLunch({...lunch, [e.target.name]: e.target.value})
-        setCalories(calories + Number(e.target.value.split("-")[1]));
       }
       if(e.target.name.includes("dinner")) {
         setDinner({...dinner, [e.target.name]: e.target.value})
-        setCalories(calories + Number(e.target.value.split("-")[1]));
       }
+     
       console.log(breakfast);
       console.log(lunch);
       console.log(dinner);
