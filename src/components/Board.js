@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
+import db from '../firebaseConfig';
 function Board(props) {
 
   if (!props.data.myMenu) {
     return null;
   }
+
+  const handleDeletedItems = () => {
+    db.collection('menus').doc(props.data.id).delete()
+  }
+  
   return (
     <div className="card border-danger" style={{ width: '18rem' }}>
         {console.log(props.data.myMenu)}
@@ -20,7 +26,7 @@ function Board(props) {
                     {[...Array(100)].map((e,i)=> <option value={i}>{i} %</option>)}
               </select><br/>
               <button className="btn btn-success">Update</button>
-              <button className="btn btn-danger">Delete Menu</button><br/><br/>
+              <button className="btn btn-danger" onClick={handleDeletedItems}>Delete Menu</button><br/><br/>
             </div>
           </div>
     </div>

@@ -28,9 +28,16 @@ function Menu() {
           if (change.type === "added") {
             console.log("Hello adding");
             console.log(change.doc.data())
-            setMenu([...menu, change.doc.data()])
-        }else {
-          console.log("sorry")
+            setMenu((prevMenu) => [...prevMenu, {...change.doc.data(), id:change.doc.id}])
+        }else if(change.type === "removed"){
+          console.log("we detleted menu with id",change.doc.id)
+          setMenu((menuState) => {
+            let newState = [...menuState];
+            newState = newState.filter(m => m.id !== change.doc.id)
+           // newState = newState.filter(m => console.log(m))
+           // console.log(newState)
+            return newState;
+          })
         }
         });
     });
@@ -61,12 +68,6 @@ function Menu() {
     calculateTheCalories()
   },[breakfast,lunch,dinner])
     const handleInputChange = (e) => {
-      // console.log(e.target.value);
-     // setMenu({ ...menu, [e.target.name]: e.target.value });
-      //console.log(e.target.value.mealName.split("-"));
-      console.log(e.target.value.split("-")[1]);
-
-      //console.log(...e.target.value.calories)
       if(e.target.name.includes("breakfast")) {
         setBreakfast({...breakfast, [e.target.name]: e.target.value})
       }
@@ -76,11 +77,6 @@ function Menu() {
       if(e.target.name.includes("dinner")) {
         setDinner({...dinner, [e.target.name]: e.target.value})
       }
-     
-      console.log(breakfast);
-      console.log(lunch);
-      console.log(dinner);
-      console.log(calories);
   };
 
   const handleCommitmentChange = (e) => {
@@ -94,28 +90,21 @@ function Menu() {
       db.collection('menus').add({
         myMenu
   })
-    firebaseUpdate();
+  
     setCalories(0)
   }
 
-    const fetchData = async ()=>{
-        const menuResult = await db.collection('menus').get();
-        const menusData = menuResult.docs.map(menu => menu.data())
-        setMenu(menusData);
-        //  console.log(menusData)
-      }
-
-      useEffect(()=>{
-        fetchData();
-        // console.log(myMenu)
-      },[])
+    useEffect(()=>{
+      firebaseUpdate();
+      // console.log(myMenu)
+    },[])
 
   return (
     <div className="container">
 
       <Form handleInputChange={handleInputChange} submit={addNewMenu} totalCalories={calories}/>
       {console.log(menu)}
-        {menu.map(m => <Board data={m} handleCommitmentChange={handleCommitmentChange} />)}
+        {menu.map(m => <Board data={m} key={m.id} handleCommitmentChange={handleCommitmentChange} />)}
         {/* {menu.map(m => console.log(m))} */}
     </div>
   );
