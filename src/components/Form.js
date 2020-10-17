@@ -48,7 +48,7 @@ function Form({handleInputChange, handlePersonChange, handleDayChange, submit, t
   return (
     <form onSubmit={submit}>
       <h3>Total Calory: {totalCalories}</h3>
-       <div class="form-group col-md-3">
+       <div class="form-group col-md-6">
        <p>Breakfast:</p> 
        <select className="form-control" name="breakfast1" onChange={(e) => handleInputChange(e)}>
               {breakfastOption.map(m => <option value= {`${m.mealName}-${m.calories}`}>{m.mealName } - {m.calories}</option>)}

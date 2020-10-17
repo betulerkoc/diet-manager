@@ -3,6 +3,7 @@ import db from '../firebaseConfig';
 import Board from "./Board";
 import List from "./List";
 import Form from "./Form";
+import { Button, Modal } from 'react-bootstrap';
 
 function Menu() {
 
@@ -17,6 +18,11 @@ function Menu() {
     const [calories, setCalories] = useState(0);
     const [cardType, setCardType] = useState("List");
     const [sortOption, setSortOption] = useState("asc");
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
 
     var myMenu = {
@@ -49,6 +55,7 @@ function Menu() {
         });
     });
   }
+  console.log(menu)
 
   const calculateTheCalories = ()=> {
     setCalories(() => {
@@ -132,27 +139,78 @@ function Menu() {
       firebaseUpdate();
     },[])
 
+    const makeFilter = (day) => {
+      return menu.filter(m => m.myMenu.day === day).map(result => <Board data={result} key={result.id} handleCommitmentChange={handleCommitmentChange}/>)
+    }
+
+
   return (
-    <div className="container">
-      <div class="form-group col-md-1">
-        <span>Sort By Calories</span>
-        <select className="form-control" name="sort" onChange={(e) => handleSortChange(e)}>
-              <option value="desc">Select</option>
-              <option value="desc">desc</option>
-              <option value= "asc">asc</option>
-        </select>
-      </div>
-
-  <button onClick={handleCardType} className="btn btn-warning">{cardType}</button>
-
-    <Form handleInputChange={handleInputChange} handleDayChange={handleDayChange} handlePersonChange={handlePersonChange} submit={addNewMenu} totalCalories={calories}/>
-      {console.log(menu)}
-        {menu.map(m => {
-          return (
-           cardType === "List" ? <Board data={m} key={m.id} handleCommitmentChange={handleCommitmentChange} /> : <List data={m}/>)}
-          )}
-        {/* {menu.map(m => console.log(m))} */}
+  <div className="container">
+    <div className="row">
+    <div class="form-group col-md-2">
+      <span>Sort By Calories</span>
+      <select className="form-control" name="sort" onChange={(e) => handleSortChange(e)}>
+            <option value="desc">Select</option>
+            <option value="desc">desc</option>
+            <option value= "asc">asc</option>
+      </select>
     </div>
+    <Button onClick={handleCardType} variant="outline-success">{cardType}</Button>
+    <Button variant="outline-dark" onClick={handleShow}>
+       <h1>+</h1> 
+     </Button>
+  </div>
+
+  <Modal show={show} onHide={handleClose}>
+    <Modal.Header closeButton>
+      <Modal.Title>Modal heading</Modal.Title>
+    </Modal.Header>
+    <Form handleInputChange={handleInputChange} handleDayChange={handleDayChange} handlePersonChange={handlePersonChange} submit={addNewMenu} totalCalories={calories}/>
+    <Modal.Footer>
+      <Button variant="primary" onClick={handleClose}>
+        Save Changes
+      </Button>
+    </Modal.Footer>
+  </Modal>
+  <div class="container">
+    <div class="row" style={{overflowX: 'scroll', width: '180rem'}}>
+      <div style={{ width: '25rem' }}>
+        <h2>Monday</h2>
+          {makeFilter("Monday")}
+      </div>
+      <div style={{ width: '25rem' }}>
+        <h2>Tuesday</h2>
+        {makeFilter("Tuesday")}
+      </div>
+      <div style={{ width: '25rem' }}>
+         <h2>Wednesday</h2>
+         {makeFilter("Wednesday")}
+      </div>
+      <div style={{ width: '25rem' }}>
+        <h2>Thursday</h2>
+        {makeFilter("Thursday")}
+      </div>
+      <div style={{ width: '25rem' }}>
+        <h2>Friday</h2>
+        {makeFilter("Friday")}
+      </div>
+      <div style={{ width: '25rem' }}>
+        <h2>Saturday</h2>
+        {makeFilter("Saturday")}
+      </div>
+      <div style={{ width: '25rem' }}>
+        <h2>Sunday</h2>
+        {makeFilter("Sunday")}
+      </div>
+    </div>
+  </div>
+
+    {/* {menu.map(m => {
+      return (
+        cardType === "List" ? <Board data={m} key={m.id} handleCommitmentChange={handleCommitmentChange} /> : <List data={m}/>)
+      })}
+    {menu.map(m => console.log(m))} */}
+  </div>
   );
 }
 
