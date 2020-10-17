@@ -30,7 +30,7 @@ const submit = (e) => {
 }
 
 return (
-    <div className="card" style={{ width: '18rem' }}>
+    <div className="card" style={{ width: '30rem' }}>
     <h3>Calorie calculator</h3>
      <form onSubmit={submit}>
       <div className="form-group">

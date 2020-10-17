@@ -21,7 +21,6 @@ function Board(props) {
           <h5>Lunch</h5> {props.data.myMenu.lunch.map(b =>  <span>{b.mealName}  {b.calories}</span>)} 
             {/* <div><h3>Middle Lunch:</h3> <span> {props.data.myMenu.middleLunch.map(b =>  <span><br/> {b.mealName}, {b.calories} <br/></span>)}  </span> </div> */}
             <h5>Dinner</h5> {props.data.myMenu.dinner.map(b =>  <span> {b.mealName}  {b.calories}</span>)}  <br/>
-            <h5>Day: {props.data.myMenu.day}</h5>
             <h6>Commitment: {props.data.commitment && props.data.commitment.commitment}</h6>
               <select className="form-control" name="commitment" onChange={props.handleCommitmentChange}>
                     {[...Array(100)].map((e,i)=> <option value={i}>{i} %</option>)}

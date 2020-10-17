@@ -23,6 +23,7 @@ function Menu() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 
     var myMenu = {
@@ -143,6 +144,19 @@ function Menu() {
       return menu.filter(m => m.myMenu.day === day).map(result => <Board data={result} key={result.id} handleCommitmentChange={handleCommitmentChange}/>)
     }
 
+    const renderBoard = () => {
+      return(
+      <div class="row" style={{overflowX: 'scroll', width: '180rem'}}>
+       {weekDays.map(m =>   <div style={{ width: '25rem' }}>
+           <h2>{m}</h2>
+            {makeFilter(m)}
+         </div> )} 
+        </div>
+    )}
+
+    const renderList = () => {
+      return(menu.map(m => <List data={m}/>))
+    }
 
   return (
   <div className="container">
@@ -172,44 +186,11 @@ function Menu() {
       </Button>
     </Modal.Footer>
   </Modal>
-  <div class="container">
-    <div class="row" style={{overflowX: 'scroll', width: '180rem'}}>
-      <div style={{ width: '25rem' }}>
-        <h2>Monday</h2>
-          {makeFilter("Monday")}
-      </div>
-      <div style={{ width: '25rem' }}>
-        <h2>Tuesday</h2>
-        {makeFilter("Tuesday")}
-      </div>
-      <div style={{ width: '25rem' }}>
-         <h2>Wednesday</h2>
-         {makeFilter("Wednesday")}
-      </div>
-      <div style={{ width: '25rem' }}>
-        <h2>Thursday</h2>
-        {makeFilter("Thursday")}
-      </div>
-      <div style={{ width: '25rem' }}>
-        <h2>Friday</h2>
-        {makeFilter("Friday")}
-      </div>
-      <div style={{ width: '25rem' }}>
-        <h2>Saturday</h2>
-        {makeFilter("Saturday")}
-      </div>
-      <div style={{ width: '25rem' }}>
-        <h2>Sunday</h2>
-        {makeFilter("Sunday")}
-      </div>
-    </div>
-  </div>
 
-    {/* {menu.map(m => {
-      return (
-        cardType === "List" ? <Board data={m} key={m.id} handleCommitmentChange={handleCommitmentChange} /> : <List data={m}/>)
-      })}
-    {menu.map(m => console.log(m))} */}
+  <div class="container">
+    {cardType === "List" ? renderBoard() : renderList()}
+  </div>
+  
   </div>
   );
 }
