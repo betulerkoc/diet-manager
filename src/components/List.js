@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormText } from 'react-bootstrap';
 
 function List(props) {
 
@@ -9,19 +8,19 @@ function List(props) {
         {console.log(props)}
         <div class="list-group list-group-flush">
             <h3> {props.data.myMenu.person && props.data.myMenu.person+`'s`} Menu</h3>
-            <a href="#" class="list-group-item list-group-item-action">
+            <a href="/list" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Breakfast</h5>
                     <small>{props.data.myMenu.breakfast.map(b =>  <span>{b.mealName}  {b.calories}</span>)}</small>
                 </div>
             </a>
-            <a href="#" class="list-group-item list-group-item-action">
+            <a href="/list" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Lunch</h5>
                     <small>{props.data.myMenu.lunch.map(b =>  <span>{b.mealName}  {b.calories}</span>)}</small>
                 </div>
             </a>
-            <a href="#" class="list-group-item list-group-item-action">
+            <a href="/list" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Dinner</h5>
                     <small>{props.data.myMenu.dinner.map(b =>  <span>{b.mealName}  {b.calories}</span>)}</small>

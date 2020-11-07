@@ -61,21 +61,16 @@ function Menu() {
   const calculateTheCalories = ()=> {
     setCalories(() => {
       let sum = 0;
-      for(const key in breakfast)
-      {
+      for(const key in breakfast){
         sum += Number(breakfast[key].split('-')[1])
       }
-
-      for(const key in lunch)
-      {
+      for(const key in lunch){
         sum += Number(lunch[key].split('-')[1])
       }
-
-      for(const key in dinner)
-      {
+      for(const key in dinner){
         sum += Number(dinner[key].split('-')[1])
       }
-      return sum
+      return sum;
     })
   }
 
@@ -98,17 +93,19 @@ function Menu() {
 
   useEffect(()=> {
     calculateTheCalories()
-      },[breakfast,lunch,dinner])
-        const handleInputChange = (e) => {
-          if(e.target.name.includes("breakfast")) {
-            setBreakfast({...breakfast, [e.target.name]: e.target.value})
-          }
-          if(e.target.name.includes("lunch")) {
-            setLunch({...lunch, [e.target.name]: e.target.value})
-          }
-          if(e.target.name.includes("dinner")) {
-            setDinner({...dinner, [e.target.name]: e.target.value})
-          }
+      // eslint-disable-next-line 
+  },[breakfast,lunch,dinner])
+
+  const handleInputChange = (e) => {
+    if(e.target.name.includes("breakfast")) {
+      setBreakfast({...breakfast, [e.target.name]: e.target.value})
+    }
+    if(e.target.name.includes("lunch")) {
+      setLunch({...lunch, [e.target.name]: e.target.value})
+    }
+    if(e.target.name.includes("dinner")) {
+      setDinner({...dinner, [e.target.name]: e.target.value})
+    }
   };
 
   const handleCommitmentChange = (e) => {
@@ -146,7 +143,7 @@ function Menu() {
 
     const renderBoard = () => {
       return(
-      <div class="row" style={{overflowX: 'scroll', width: '180rem'}}>
+      <div class="row" style={{width: '180rem'}}>
        {weekDays.map(m =>   <div style={{ width: '25rem' }}>
            <h2>{m}</h2>
             {makeFilter(m)}
@@ -169,7 +166,7 @@ function Menu() {
             <option value= "asc">asc</option>
       </select>
     </div>
-    <Button onClick={handleCardType} variant="outline-success">{cardType}</Button>
+    <Button onClick={handleCardType} variant="outline-success" className="m-3">{cardType}</Button>
     <Button variant="outline-dark" onClick={handleShow}>
        <h1>+</h1> 
      </Button>
@@ -190,7 +187,7 @@ function Menu() {
   <div class="container">
     {cardType === "List" ? renderBoard() : renderList()}
   </div>
-  
+
   </div>
   );
 }

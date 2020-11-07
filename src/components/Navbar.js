@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Nav from 'react-bootstrap/Nav';
 
 const Navbar = () => {
   return (
     <>
-     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+     <nav class="navbar navbar-expand-lg navbar-light bg-danger">
         <Link to ="/"><h2 className ="navbar-brand">Diet Manager</h2></Link>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
@@ -13,7 +12,7 @@ const Navbar = () => {
                 <Link to="/calculator" className ="nav-link">Calculator</Link>
             </div>
         </div>
-    </nav>
+    </nav><br/>
     </>
   );
 };
